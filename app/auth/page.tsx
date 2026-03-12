@@ -72,6 +72,8 @@ export default function AuthPage() {
   const redirectPath = redirectParam?.startsWith("/profile") ? "/" : (redirectParam ?? "/");
   const referralParam = searchParams?.get("ref") ?? "";
   const errorParam = searchParams?.get("error");
+  const stepParam = searchParams?.get("step");
+  const isMobileFormStep = stepParam === "form";
   const supabase = createClient();
 
   useEffect(() => {
@@ -303,6 +305,12 @@ export default function AuthPage() {
     }
   };
 
+  const goToFormStep = () => {
+    const params = new URLSearchParams(searchParams?.toString() ?? "");
+    params.set("step", "form");
+    router.push(`/auth?${params.toString()}`);
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-white text-[#1b1a16] selection:bg-[#1b1a16] selection:text-white">
       <style jsx global>{`
@@ -326,10 +334,17 @@ export default function AuthPage() {
       <div className="pointer-events-none absolute -bottom-28 right-[-80px] h-80 w-80 rounded-full bg-[#f0f0f0]/90 blur-3xl" />
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-center gap-10 px-5 py-10 lg:grid lg:grid-cols-[1.15fr_1fr]">
-        <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#1f1f1f] text-white shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+        <section
+          className={`relative overflow-hidden rounded-3xl border border-white/10 bg-[#1f1f1f] text-white shadow-[0_24px_60px_rgba(0,0,0,0.35)] ${
+            isMobileFormStep ? "hidden lg:block" : ""
+          }`}
+        >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14)_0%,rgba(0,0,0,0.55)_65%)]" />
           <div className="relative z-10 flex h-full flex-col justify-between gap-10 p-8 md:p-10">
             <div className="space-y-6 motion-safe:animate-[fade-up_0.7s_ease-out_both]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-4 py-2">
+                <span className="text-xl font-black tracking-tight">roorq.</span>
+              </div>
               <div className="flex flex-wrap items-center gap-3 text-[11px] font-[var(--font-mono)] uppercase tracking-[0.3em] text-white/70">
                 <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1">
                   Roorq Archive
@@ -365,8 +380,8 @@ export default function AuthPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="relative h-40 overflow-hidden rounded-2xl border border-white/20 bg-white/10 shadow-[0_10px_25px_rgba(0,0,0,0.25)] motion-safe:animate-[float-slow_8s_ease-in-out_infinite] sm:h-52">
                 <Image
-                  src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
-                  alt="Vintage sweatshirt"
+                  src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=900&q=80"
+                  alt="Roorq vintage model"
                   fill
                   sizes="(min-width: 1024px) 30vw, 80vw"
                   className="object-cover"
@@ -397,11 +412,30 @@ export default function AuthPage() {
               <span className="rounded-full border border-white/30 px-3 py-1">Drop alerts</span>
               <span className="rounded-full border border-white/30 px-3 py-1">COD guarantee</span>
             </div>
+
+            <div className="lg:hidden">
+              <button
+                type="button"
+                onClick={goToFormStep}
+                className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-[var(--font-mono)] uppercase tracking-[0.24em] text-[#1b1a16] shadow-[0_16px_30px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_35px_rgba(0,0,0,0.45)]"
+              >
+                Get started free
+              </button>
+            </div>
           </div>
         </section>
 
-        <section className="relative">
+        <section className={`relative ${isMobileFormStep ? "" : "hidden lg:block"}`}>
           <div className="rounded-3xl border border-white/10 bg-[#1f1f1f] p-6 text-[#f5f5f5] shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur md:p-8">
+            <div className="mb-4 lg:hidden">
+              <button
+                type="button"
+                onClick={() => router.push("/auth")}
+                className="text-xs font-[var(--font-mono)] uppercase tracking-[0.18em] text-gray-300 underline decoration-dotted underline-offset-4"
+              >
+                Back
+              </button>
+            </div>
             <div className="flex flex-col gap-6 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-2">
                 <p className="text-[11px] font-[var(--font-mono)] uppercase tracking-[0.3em] text-gray-400">

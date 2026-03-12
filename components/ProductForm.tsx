@@ -50,7 +50,7 @@ export default function ProductForm({ initialData, drops }: ProductFormProps) {
     size: initialData?.size || 'M',
     color: initialData?.color || '',
     material: initialData?.material || '',
-    stock_quantity: initialData?.stock_quantity || 0,
+    stock_quantity: initialData?.stock_quantity ?? 1,
     images: initialData?.images || [],
     drop_id: initialData?.drop_id || '',
     is_active: initialData?.is_active ?? true,
@@ -86,12 +86,16 @@ export default function ProductForm({ initialData, drops }: ProductFormProps) {
           ? null
           : Number.parseFloat(String(retailValueRaw));
       const stockValue = Number.parseInt(String(formData.stock_quantity), 10);
+      if (!Number.isFinite(stockValue) || stockValue < 1) {
+        throw new Error('Stock quantity must be at least 1');
+      }
 
       const dataToSubmit = {
         ...formData,
         price: priceValue,
         retail_price: retailValue,
         stock_quantity: stockValue,
+        reserved_quantity: 0,
         drop_id: formData.drop_id || null,
       };
 
@@ -184,7 +188,7 @@ export default function ProductForm({ initialData, drops }: ProductFormProps) {
               value={formData.stock_quantity}
               onChange={handleChange}
               required
-              min="0"
+              min="1"
               className="w-full border border-gray-300 p-3 rounded"
             />
           </div>

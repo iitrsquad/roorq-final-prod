@@ -85,14 +85,14 @@ export default async function Home() {
            </div>
         </div>
 
-        {/* Badge - Bottom Left positioning (Quality Stamp) */}
-        <div className="absolute bottom-12 left-6 md:left-12 z-20 flex flex-col items-start gap-2">
+        {/* Badge - Keep away from mobile CTA buttons */}
+        <div className="absolute top-6 left-4 md:top-auto md:bottom-12 md:left-12 z-20 flex flex-col items-start gap-2">
            <div className="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
              The Home of Vintage
            </div>
-           <div className="bg-black text-white px-2 py-1 text-[10px] font-mono uppercase tracking-widest">
+           {/* <div className="bg-black text-white px-2 py-1 text-[10px] font-mono uppercase tracking-widest">
              Over 600k Items Sold
-           </div>
+           </div> */}
         </div>
       </section>
 
@@ -180,7 +180,7 @@ export default async function Home() {
           )}
         </div>
         
-        <div className="mt-12 text-center md:hidden">
+        <div className="mt-6 text-center md:hidden">
           <Link href="/shop" className="inline-block border-2 border-black px-8 py-3 text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition rounded-none">
             View All Items
           </Link>
@@ -188,7 +188,7 @@ export default async function Home() {
       </section>
 
       {/* SECTION: Shop Men/Women/Outlet Trio */}
-      <section className="py-8 max-w-[1800px] mx-auto px-4">
+      <section className="hidden md:block py-8 max-w-[1800px] mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {/* Men's Column */}
           <div className="relative h-[650px] group overflow-hidden border border-transparent hover:border-black transition-colors duration-300">
@@ -253,7 +253,7 @@ export default async function Home() {
       </section>
 
       {/* SECTION: Text Links (Brand Navigation) */}
-      <section className="py-16 max-w-[1800px] mx-auto px-4 border-b border-gray-100">
+      {/* <section className="py-16 max-w-[1800px] mx-auto px-4 border-b border-gray-100">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             {
@@ -285,7 +285,7 @@ export default async function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* SECTION: Shop Bestsellers (Grid) */}
       <section className="py-16 max-w-[1800px] mx-auto px-4">
@@ -338,7 +338,7 @@ export default async function Home() {
       </section>
 
       {/* SECTION: Shop Bestsellers Row 2 */}
-      <section className="pb-16 max-w-[1800px] mx-auto px-4">
+      {/* <section className="pb-16 max-w-[1800px] mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { title: 'Vintage Designer', img: 'https://images.unsplash.com/photo-1503341455253-b2e72333dbdb?auto=format&fit=crop&w=800&q=80' },
@@ -360,7 +360,7 @@ export default async function Home() {
             </Link>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* SECTION 5: Gold Access (VIP Layout) */}
       <section className="py-20 bg-black text-white border-y border-gray-800">

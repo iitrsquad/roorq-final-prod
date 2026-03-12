@@ -41,7 +41,7 @@ const faqs: FaqItem[] = [
   {
     category: 'returns',
     question: 'Can I return my items?',
-    answer: 'Return window is 30 days from delivery. After that, returns are not eligible.',
+    answer: 'Return window is 2 days (48 hours) from delivery. After that, returns are not eligible.',
   },
 ];
 

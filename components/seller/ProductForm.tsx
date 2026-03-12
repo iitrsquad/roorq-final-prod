@@ -35,7 +35,7 @@ export default function VendorProductForm({ initialData }: { initialData?: Produ
     category: initialData?.category ?? 't-shirt',
     size: initialData?.size ?? 'M',
     condition: initialData?.condition ?? 'good',
-    stock_quantity: initialData?.stock_quantity ?? 0,
+    stock_quantity: initialData?.stock_quantity ?? 1,
     images: initialData?.images ?? [],
     shipping_time_days: initialData?.shipping_time_days ?? 3,
   })
@@ -74,8 +74,13 @@ export default function VendorProductForm({ initialData }: { initialData?: Produ
         size: formData.size,
         condition: formData.condition,
         stock_quantity: Number(formData.stock_quantity),
+        reserved_quantity: 0,
         images: formData.images,
         shipping_time_days: Number(formData.shipping_time_days),
+      }
+
+      if (!Number.isFinite(payload.stock_quantity) || payload.stock_quantity < 1) {
+        throw new Error('Stock quantity must be at least 1')
       }
 
       if (initialData) {
@@ -169,7 +174,7 @@ export default function VendorProductForm({ initialData }: { initialData?: Produ
               value={formData.stock_quantity}
               onChange={handleChange}
               required
-              min="0"
+              min="1"
               className="w-full border border-gray-300 p-3 rounded"
             />
           </div>

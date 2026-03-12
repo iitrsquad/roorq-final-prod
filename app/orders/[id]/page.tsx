@@ -29,6 +29,7 @@ type VendorOrderItem = {
 
 type VendorOrder = {
   id: string;
+  vendor_id: string | null;
   status: string;
   subtotal: number;
   shipping_fee: number | null;
@@ -81,6 +82,7 @@ export default async function OrderDetailPage({
     );
   }
 
+  // Fetch parent order first. Keep this query minimal and resilient.
   const { data: order, error } = await supabase
     .from('parent_orders')
     .select(`
@@ -90,22 +92,7 @@ export default async function OrderDetailPage({
       payment_method,
       payment_status,
       shipping_address,
-      created_at,
-      vendor_orders (
-        id,
-        status,
-        subtotal,
-        shipping_fee,
-        tracking_number,
-        tracking_url,
-        vendor:users(store_name, business_name, email),
-        items:vendor_order_items (
-          id,
-          quantity,
-          price_at_purchase,
-          product:products (name, size, images)
-        )
-      )
+      created_at
     `)
     .eq('id', params.id)
     .eq('user_id', user.id)
@@ -132,11 +119,35 @@ export default async function OrderDetailPage({
     );
   }
 
+  // Fetch vendor order details separately. If this fails, show parent order anyway.
+  const { data: rawVendorOrders, error: vendorOrdersError } = await supabase
+    .from('vendor_orders')
+    .select(`
+      id,
+      vendor_id,
+      status,
+      subtotal,
+      shipping_fee,
+      tracking_number,
+      tracking_url,
+      items:vendor_order_items (
+        id,
+        quantity,
+        price_at_purchase,
+        product:products (name, size, images)
+      )
+    `)
+    .eq('parent_order_id', order.id);
+
+  if (vendorOrdersError) {
+    logger.warn('Vendor orders fetch failed', vendorOrdersError instanceof Error ? vendorOrdersError : undefined);
+  }
+
   const shipping = order.shipping_address as { hostel?: string; room?: string; phone?: string; campus?: string } | null;
   const vendorOrders: VendorOrder[] =
-    (order.vendor_orders ?? []).map((vendorOrder: any) => ({
+    (rawVendorOrders ?? []).map((vendorOrder: any) => ({
       ...vendorOrder,
-      vendor: Array.isArray(vendorOrder.vendor) ? vendorOrder.vendor[0] : vendorOrder.vendor,
+      vendor: null,
       items: (vendorOrder.items ?? []).map((item: any) => ({
         ...item,
         product: Array.isArray(item.product) ? item.product[0] : item.product,
@@ -189,9 +200,7 @@ export default async function OrderDetailPage({
               <div key={vendorOrder.id} className="border rounded-lg p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                   <div>
-                    <h2 className="text-xl font-bold">
-                      {vendorOrder.vendor?.store_name || vendorOrder.vendor?.business_name || 'Vendor'}
-                    </h2>
+                    <h2 className="text-xl font-bold">Vendor Order</h2>
                     <p className="text-sm text-gray-500">Order #{vendorOrder.id.slice(0, 8).toUpperCase()}</p>
                   </div>
                   <span className="px-3 py-1 rounded text-sm font-semibold bg-gray-100 text-gray-700">

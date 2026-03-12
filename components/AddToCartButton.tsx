@@ -1,9 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ShoppingCart, Check, Loader2 } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { logger } from '@/lib/logger';
 
@@ -20,29 +18,18 @@ type CartItem = {
 export default function AddToCartButton({ productId, disabled }: AddToCartButtonProps) {
   const [loading, setLoading] = useState(false);
   const [added, setAdded] = useState(false);
-  const router = useRouter();
-  const supabase = useMemo(() => createClient(), []);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = () => {
     if (disabled || loading) return;
 
     setLoading(true);
-    
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        toast.error('Please sign in to add items to cart');
-        router.push('/auth?redirect=/products/' + productId);
-        return;
-      }
 
-      // Get cart from localStorage or create new
+    try {
+      // Cart stays local; authentication is enforced at checkout.
       const cart = JSON.parse(localStorage.getItem('cart') || '[]') as CartItem[];
-      
-      // Check if product already in cart
+
       const existingItem = cart.find((item) => item.productId === productId);
-      
+
       if (existingItem) {
         existingItem.quantity += 1;
         toast.success('Updated quantity in cart');
@@ -50,18 +37,12 @@ export default function AddToCartButton({ productId, disabled }: AddToCartButton
         cart.push({ productId, quantity: 1 });
         toast.success('Added to cart!');
       }
-      
+
       localStorage.setItem('cart', JSON.stringify(cart));
-      
-      // Dispatch custom event to update cart count in Navbar
       window.dispatchEvent(new Event('cartUpdated'));
-      
-      // Show success animation
+
       setAdded(true);
       setTimeout(() => setAdded(false), 2000);
-      
-      // Removed router.refresh() - it causes unnecessary re-renders and can break sessions
-      // The cart state is in localStorage, so no refresh needed
     } catch (error: unknown) {
       logger.error('Error adding to cart', error instanceof Error ? error : undefined);
       toast.error('Failed to add to cart. Please try again.');

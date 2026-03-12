@@ -16,7 +16,10 @@ interface Product {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
-  const isSoldOut = (product.stock_quantity || 0) <= (product.reserved_quantity || 0);
+  const stockQuantity = Math.max(0, Number(product.stock_quantity ?? 0));
+  const reservedQuantity = Math.max(0, Number(product.reserved_quantity ?? 0));
+  const availableStock = Math.max(0, stockQuantity - reservedQuantity);
+  const isSoldOut = availableStock <= 0;
 
   return (
     <Link href={`/products/${product.id}`} className="group block">
