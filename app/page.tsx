@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DropCountdown from '@/components/DropCountdown';
@@ -7,15 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import ProductCard from '@/components/ProductCard';
 import CommunityStrip from '@/components/CommunityStrip';
 import FAQ from '@/components/FAQ';
-import { buildMetadata } from '@/lib/seo/metadata';
 import { ArrowRight, Check, Package, Zap, TrendingUp, ShieldCheck, Truck, CreditCard, Star, UserPlus, ShoppingBag, Clock, Quote } from 'lucide-react';
-
-export const metadata = buildMetadata({
-  title: 'Weekly Drops',
-  description: 'Campus-exclusive weekly-drop fashion platform for IIT Roorkee. COD-first with hostel delivery.',
-  path: '/',
-  keywords: ['Roorq', 'IIT Roorkee', 'weekly drops', 'campus fashion', 'COD delivery'],
-});
 
 export default async function Home() {
   const supabase = await createClient();
@@ -37,69 +28,68 @@ export default async function Home() {
     <div className="min-h-screen flex flex-col font-sans bg-white text-black pb-20 md:pb-0 selection:bg-black selection:text-white">
       <Navbar />
       
-      {/* SECTION 1: Hero Banner (Strict Thrifted.com Clone) */}
-      <section className="relative w-full h-[600px] md:h-[800px] bg-gray-100 overflow-hidden">
+            {/* SECTION 1: Hero Banner */}
+      <section className="relative w-full h-[620px] md:h-[820px] bg-gray-100 overflow-hidden">
         {/* Background Image - Full Bleed */}
-        <div className="absolute inset-0 z-0 bg-white">
-          <Image
-            src="https://images.unsplash.com/photo-1611323593958-0fec16fa2909?auto=format&fit=max&w=2000&q=80"
-            alt="Woman in a winter jacket"
-            fill
-            priority
-            sizes="100vw"
-            className="object-contain object-center"
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=2070&auto=format&fit=crop"
+            alt="Curated thrift finds"
+            className="w-full h-full object-cover object-center"
           />
         </div>
-        
-        {/* Content Overlay - Centered for Maximum Impact */}
-        <div className="absolute inset-0 flex flex-col justify-center items-center z-10">
-           {/* Massive Headline */}
-           <h1 className="text-[15vw] md:text-[12rem] font-black uppercase tracking-tighter leading-[0.8] text-center mix-blend-hard-light drop-shadow-xl w-full px-4 pointer-events-none">
-             <span className="text-red-600 block">Roorq</span>
-             <span className="text-white block md:inline">Weekly</span>
-             <span className="text-red-600 block md:inline">Drop</span>
-           </h1>
-           
-           {/* "NOW LIVE" Overlay Effect */}
-           <div className="mt-4 md:-mt-12 relative pointer-events-none">
-             <h2 className="text-[12vw] md:text-[10rem] font-black uppercase tracking-tighter text-red-600 leading-none drop-shadow-2xl transform -rotate-2">
-               Now Live
-             </h2>
-           </div>
+        <div className="absolute inset-0 bg-black/35 z-[1]" />
 
-           {/* Central CTA Group - The UX Sweet Spot */}
-           <div className="mt-12 flex flex-col md:flex-row gap-6 items-center justify-center w-full max-w-2xl px-4">
-             <Link
-               href="/shop"
-               className="group bg-white text-black px-10 py-4 text-sm font-black uppercase tracking-widest border-2 border-black hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] flex items-center gap-3 min-w-[200px] justify-center"
-             >
-               Shop Drop <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-             </Link>
-             
-             <Link
-               href="/mystery-box"
-               className="group bg-black text-white px-10 py-4 text-sm font-black uppercase tracking-widest border-2 border-white hover:bg-white hover:text-black hover:border-black transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.5)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] flex items-center gap-3 min-w-[200px] justify-center backdrop-blur-sm bg-opacity-80"
-             >
-               Bid Mystery Box <Zap className="w-4 h-4 fill-current" />
-             </Link>
-           </div>
+        {/* Content Overlay */}
+        <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-center px-4">
+          <div className="inline-flex items-center gap-2 bg-white/90 text-black px-4 py-2 text-[10px] font-black uppercase tracking-widest border border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+            Curated Thrift Marketplace
+          </div>
+
+          <h1 className="mt-6 text-[11vw] md:text-[6.5rem] font-black uppercase tracking-tight leading-[0.9] text-white drop-shadow-2xl">
+            Thrift Finds That
+            <span className="block text-red-500">Feel One-of-One</span>
+          </h1>
+
+          <p className="mt-6 text-sm md:text-lg text-white/90 max-w-2xl font-medium">
+            Shop verified thrift sellers and Instagram boutiques. Limited stock, fresh drops daily, delivered to campus.
+          </p>
+
+          <div className="mt-10 flex flex-col md:flex-row gap-5 items-center justify-center w-full max-w-2xl">
+            <Link
+              href="/shop"
+              className="group bg-white text-black px-10 py-4 text-sm font-black uppercase tracking-widest border-2 border-black hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] flex items-center gap-3 min-w-[220px] justify-center"
+            >
+              Shop Thrift Finds <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+
+            <Link
+              href="/sell"
+              className="group bg-transparent text-white px-10 py-4 text-sm font-black uppercase tracking-widest border-2 border-white hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.35)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] flex items-center gap-3 min-w-[220px] justify-center"
+            >
+              Sell on Roorq <UserPlus className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-[10px] md:text-xs uppercase tracking-widest font-mono text-white/80">
+            <span className="px-3 py-1 border border-white/40">Verified sellers</span>
+            <span className="px-3 py-1 border border-white/40">COD & UPI</span>
+            <span className="px-3 py-1 border border-white/40">24-48h campus delivery</span>
+          </div>
         </div>
 
-        {/* Badge - Keep away from mobile CTA buttons */}
-        <div className="absolute top-6 left-4 md:top-auto md:bottom-12 md:left-12 z-20 flex flex-col items-start gap-2">
-           <div className="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-             The Home of Vintage
-           </div>
-           {/* <div className="bg-black text-white px-2 py-1 text-[10px] font-mono uppercase tracking-widest">
-             Over 600k Items Sold
-           </div> */}
+        {/* Badge - Bottom Left positioning */}
+        <div className="absolute bottom-10 left-6 md:left-12 z-20 flex flex-col items-start gap-2">
+          <div className="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            Campus-First Thrift
+          </div>
         </div>
       </section>
 
       {/* COD Trust Strip */}
       <div className="bg-black text-white py-3 text-center border-b border-gray-800">
         <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest font-mono">
-          COD-first on your first order • UPI unlocked after confirmed delivery • Campus delivery within 24 hours
+          Verified thrift sellers - COD & UPI - Campus delivery in 24-48 hours
         </p>
       </div>
 
@@ -180,7 +170,7 @@ export default async function Home() {
           )}
         </div>
         
-        <div className="mt-6 text-center md:hidden">
+        <div className="mt-12 text-center md:hidden">
           <Link href="/shop" className="inline-block border-2 border-black px-8 py-3 text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition rounded-none">
             View All Items
           </Link>
@@ -188,16 +178,14 @@ export default async function Home() {
       </section>
 
       {/* SECTION: Shop Men/Women/Outlet Trio */}
-      <section className="hidden md:block py-8 max-w-[1800px] mx-auto px-4">
+      <section className="py-8 max-w-[1800px] mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {/* Men's Column */}
           <div className="relative h-[650px] group overflow-hidden border border-transparent hover:border-black transition-colors duration-300">
-            <Image
+            <img 
               src="https://images.unsplash.com/photo-1488161628813-99c974fc5fe2?auto=format&fit=crop&w=800&q=80"
-              alt="Shop men's vintage"
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-700"
+              alt="Shop Men's"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[85%] bg-white p-6 text-center shadow-xl border border-black">
@@ -212,12 +200,10 @@ export default async function Home() {
 
           {/* Women's Column */}
           <div className="relative h-[650px] group overflow-hidden border border-transparent hover:border-black transition-colors duration-300">
-             <Image
+             <img 
               src="https://images.unsplash.com/photo-1503341455253-b2e72333dbdb?auto=format&fit=crop&w=800&q=80"
-              alt="Shop women's vintage"
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-700"
+              alt="Shop Women's"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[85%] bg-white p-6 text-center shadow-xl border border-black">
@@ -232,11 +218,9 @@ export default async function Home() {
 
            {/* Outlet Column */}
            <div className="relative h-[650px] group overflow-hidden border border-transparent hover:border-black transition-colors duration-300">
-             <Image
+             <img 
               src="https://images.unsplash.com/photo-1523381294911-8d3cead13475?auto=format&fit=crop&w=800&q=80"
-              alt="Shop outlet"
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
+              alt="Shop Outlet"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
@@ -253,7 +237,7 @@ export default async function Home() {
       </section>
 
       {/* SECTION: Text Links (Brand Navigation) */}
-      {/* <section className="py-16 max-w-[1800px] mx-auto px-4 border-b border-gray-100">
+      <section className="py-16 max-w-[1800px] mx-auto px-4 border-b border-gray-100">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             {
@@ -285,7 +269,7 @@ export default async function Home() {
             </div>
           ))}
         </div>
-      </section> */}
+      </section>
 
       {/* SECTION: Shop Bestsellers (Grid) */}
       <section className="py-16 max-w-[1800px] mx-auto px-4">
@@ -298,14 +282,8 @@ export default async function Home() {
             { title: 'Vintage Denim & T Shirts', img: 'https://images.unsplash.com/photo-1542272454315-4c01d7abdf4a?auto=format&fit=crop&w=800&q=80' },
           ].map((item, idx) => (
             <Link key={idx} href="/shop" className="group block">
-              <div className="relative aspect-square overflow-hidden bg-gray-100 mb-3 border border-transparent group-hover:border-black transition-all duration-300">
-                <Image
-                  src={item.img}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className="aspect-square overflow-hidden bg-gray-100 mb-3 border border-transparent group-hover:border-black transition-all duration-300">
+                <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <p className="uppercase text-xs tracking-widest font-bold font-mono group-hover:text-gray-600">{item.title} &rarr;</p>
             </Link>
@@ -338,7 +316,7 @@ export default async function Home() {
       </section>
 
       {/* SECTION: Shop Bestsellers Row 2 */}
-      {/* <section className="pb-16 max-w-[1800px] mx-auto px-4">
+      <section className="pb-16 max-w-[1800px] mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { title: 'Vintage Designer', img: 'https://images.unsplash.com/photo-1503341455253-b2e72333dbdb?auto=format&fit=crop&w=800&q=80' },
@@ -347,20 +325,14 @@ export default async function Home() {
             { title: 'Vintage Nascar', img: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=800&q=80' },
           ].map((item, idx) => (
             <Link key={idx} href="/shop" className="group block">
-              <div className="relative aspect-square overflow-hidden bg-gray-100 mb-3 border border-transparent group-hover:border-black transition-all duration-300">
-                <Image
-                  src={item.img}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className="aspect-square overflow-hidden bg-gray-100 mb-3 border border-transparent group-hover:border-black transition-all duration-300">
+                <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <p className="uppercase text-xs tracking-widest font-bold font-mono group-hover:text-gray-600">{item.title} &rarr;</p>
             </Link>
           ))}
         </div>
-      </section> */}
+      </section>
 
       {/* SECTION 5: Gold Access (VIP Layout) */}
       <section className="py-20 bg-black text-white border-y border-gray-800">
@@ -425,7 +397,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { item: 'Sweater', icon: '🧥' },
-                { item: 'Jacket', icon: '👕' },
+                { item: 'Jacket', icon: '�-' },
                 { item: 'Shoes', icon: '👟' },
               ].map((ex, idx) => (
                 <div key={idx} className="bg-zinc-900 border border-zinc-800 p-6 flex flex-col justify-between h-48 hover:border-white transition duration-300">
@@ -450,12 +422,10 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Card 1 - Brand New */}
             <div className="relative h-[500px] group overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1548883354-94bcfe321cbb?q=80&w=2070&auto=format&fit=crop"
-                alt="Brand new only"
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
+              <img 
+                src="https://images.unsplash.com/photo-1548883354-94bcfe321cbb?q=80&w=2070&auto=format&fit=crop" 
+                alt="Brand New Only"
+                className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500"></div>
               <div className="absolute bottom-0 left-0 w-full p-10 text-white border-t border-white/20 backdrop-blur-sm bg-black/30">
@@ -469,12 +439,10 @@ export default async function Home() {
 
             {/* Card 2 - Lowest Price */}
             <div className="relative h-[500px] group overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=2070&auto=format&fit=crop"
-                alt="Lowest campus price"
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
+              <img 
+                src="https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=2070&auto=format&fit=crop" 
+                alt="Lowest Campus Price"
+                className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500"></div>
               <div className="absolute bottom-0 left-0 w-full p-10 text-white border-t border-white/20 backdrop-blur-sm bg-black/30">
@@ -488,12 +456,10 @@ export default async function Home() {
 
             {/* Card 3 - IITR Exclusive */}
             <div className="relative h-[500px] group overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop"
-                alt="Campus exclusive"
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
+              <img 
+                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop" 
+                alt="Campus Exclusive"
+                className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500"></div>
               <div className="absolute bottom-0 left-0 w-full p-10 text-white border-t border-white/20 backdrop-blur-sm bg-black/30">
@@ -513,12 +479,10 @@ export default async function Home() {
 
       {/* SECTION 9: Shop Sale Banner */}
       <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
-        <Image
+        <img 
           src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=2070&auto=format&fit=crop"
-          alt="Shop sale"
-          fill
-          sizes="100vw"
-          className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+          alt="Shop Sale"
+          className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative z-10 text-center">
@@ -559,3 +523,5 @@ export default async function Home() {
     </div>
   );
 }
+
+
