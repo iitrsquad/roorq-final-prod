@@ -27,6 +27,8 @@ export default function VendorProductForm({ initialData }: { initialData?: Produ
   const supabase = useMemo(() => createClient(), [])
   const [loading, setLoading] = useState(false)
   const [newImage, setNewImage] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const STORAGE_BUCKET = 'product-images'
   const [formData, setFormData] = useState({
     name: initialData?.name ?? '',
     description: initialData?.description ?? '',
@@ -49,6 +51,38 @@ export default function VendorProductForm({ initialData }: { initialData?: Produ
     if (!newImage) return
     setFormData((prev) => ({ ...prev, images: [...prev.images, newImage] }))
     setNewImage('')
+  }
+
+  const handleUploadImages = async (files: FileList | null) => {
+    if (!files || files.length === 0) return
+    setUploading(true)
+    try {
+      const { data: auth } = await supabase.auth.getUser()
+      if (!auth.user) {
+        toast.error('Please sign in to upload images.')
+        return
+      }
+
+      const uploads: string[] = []
+      for (const file of Array.from(files)) {
+        const fileExt = file.name.split('.').pop() || 'jpg'
+        const filePath = `products/${auth.user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`
+        const { error: uploadError } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file, { upsert: false })
+        if (uploadError) throw uploadError
+        const { data: publicUrl } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath)
+        if (publicUrl?.publicUrl) uploads.push(publicUrl.publicUrl)
+      }
+
+      if (uploads.length > 0) {
+        setFormData((prev) => ({ ...prev, images: [...prev.images, ...uploads] }))
+        toast.success(`Uploaded ${uploads.length} image(s)`)
+      }
+    } catch (error: unknown) {
+      logger.error('Image upload error', error instanceof Error ? error : undefined)
+      toast.error('Failed to upload images')
+    } finally {
+      setUploading(false)
+    }
   }
 
   const handleRemoveImage = (index: number) => {
@@ -241,6 +275,19 @@ export default function VendorProductForm({ initialData }: { initialData?: Produ
           <button type="button" onClick={handleAddImage} className="bg-black text-white px-4 rounded">
             <Plus className="w-5 h-5" />
           </button>
+        </div>
+        <div className="mb-4">
+          <label className="block text-xs font-bold uppercase mb-2 text-gray-600">Or upload images</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => handleUploadImages(e.target.files)}
+            className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-black file:text-white hover:file:bg-gray-800"
+            disabled={uploading}
+          />
+          {uploading && <p className="text-xs text-gray-500 mt-2">Uploading...</p>}
+          <p className="text-xs text-gray-500 mt-1">Images are stored in Supabase Storage bucket: {STORAGE_BUCKET}</p>
         </div>
         <div className="grid grid-cols-4 gap-4">
           {formData.images.map((url: string, idx: number) => (
