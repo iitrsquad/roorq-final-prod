@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Image from 'next/image';
+import ProductImageSlider from '@/components/ProductImageSlider';
 import AddToCartButton from '@/components/AddToCartButton';
 import StructuredData from '@/components/StructuredData';
 import { buildMetadata } from '@/lib/seo/metadata';
@@ -97,46 +97,8 @@ export default async function ProductDetailPage({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-          {/* Product Images - Gallery Style */}
-          <div className="space-y-4">
-            {product.images && product.images.length > 0 ? (
-              <>
-                <div className="relative aspect-[3/4] bg-gray-50 border border-gray-100 overflow-hidden group">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                  />
-                  {/* Badge */}
-                  <div className="absolute top-4 left-4 bg-black text-white px-3 py-1 text-xs font-black uppercase tracking-widest">
-                    Vintage
-                  </div>
-                </div>
-                {product.images.length > 1 && (
-                  <div className="grid grid-cols-4 gap-4">
-                    {product.images.map((img: string, idx: number) => (
-                      <div key={idx} className="relative aspect-square bg-gray-50 border border-gray-100 cursor-pointer hover:border-black transition-colors">
-                        <Image
-                          src={img}
-                          alt={`${product.name} ${idx + 1}`}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 25vw, 12.5vw"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="aspect-[3/4] bg-gray-100 flex items-center justify-center text-gray-400 font-mono text-sm uppercase tracking-widest">
-                No Image Available
-              </div>
-            )}
-          </div>
+          {/* Product Images - Slider */}
+          <ProductImageSlider images={product.images ?? []} name={product.name} />
 
           {/* Product Info */}
           <div className="flex flex-col">
