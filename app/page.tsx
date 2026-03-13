@@ -397,7 +397,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { item: 'Sweater', icon: '🧥' },
-                { item: 'Jacket', icon: '�-' },
+                { item: 'Jacket', icon: '�-' },
                 { item: 'Shoes', icon: '👟' },
               ].map((ex, idx) => (
                 <div key={idx} className="bg-zinc-900 border border-zinc-800 p-6 flex flex-col justify-between h-48 hover:border-white transition duration-300">
