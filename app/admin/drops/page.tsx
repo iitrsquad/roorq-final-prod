@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
+import DropActions from '@/components/admin/DropActions';
 
 export default async function AdminDropsPage() {
   const supabase = await createClient();
@@ -53,9 +54,7 @@ export default async function AdminDropsPage() {
                     })}
                   </td>
                   <td className="px-6 py-4 text-sm">
-                    <Link href={`/admin/drops/${drop.id}`} className="text-blue-600 hover:underline">
-                      Edit
-                    </Link>
+                    <DropActions dropId={drop.id} />
                   </td>
                 </tr>
               ))
