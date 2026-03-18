@@ -18,7 +18,7 @@ export const metadata = buildMetadata({
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: { category?: string; search?: string; sort?: string; gender?: string; tag?: string };
+  searchParams: { category?: string; search?: string; sort?: string; gender?: string; tag?: string; vendor?: string };
 }) {
   const supabase = await createClient();
   
@@ -39,6 +39,10 @@ export default async function ShopPage({
 
   if (searchParams.search) {
     query = query.or(`name.ilike.%${searchParams.search}%,description.ilike.%${searchParams.search}%,brand.ilike.%${searchParams.search}%`);
+  }
+
+  if (searchParams.vendor) {
+    query = query.eq('vendor_id', searchParams.vendor);
   }
 
   // Sorting
@@ -96,7 +100,7 @@ export default async function ShopPage({
       {/* Header / Banner */}
       <div className="bg-gray-100 py-12 px-4 text-center border-b border-gray-200">
         <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4">
-          {searchParams.gender ? `${searchParams.gender}'s` : ''} {searchParams.category || 'All Vintage'}
+          {searchParams.vendor ? 'Seller Edit' : searchParams.gender ? `${searchParams.gender}'s` : ''} {searchParams.category || 'All Vintage'}
         </h1>
         <p className="text-gray-500 font-mono uppercase tracking-widest text-xs md:text-sm max-w-2xl mx-auto">
           {products?.length || 0} Items Found • 100% Authentic • Cleaned & Ready to Wear

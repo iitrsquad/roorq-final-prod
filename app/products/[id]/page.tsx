@@ -17,7 +17,21 @@ const getProduct = cache(async (id: string) => {
   const supabase = await createClient();
   const { data: product } = await supabase
     .from('products')
-    .select('*')
+    .select(`
+      *,
+      vendor:users(
+        id,
+        full_name,
+        email,
+        store_name,
+        store_description,
+        store_logo_url,
+        business_name,
+        business_email,
+        business_phone,
+        vendor_status
+      )
+    `)
     .eq('id', id)
     .eq('is_active', true)
     .single();
@@ -66,6 +80,25 @@ export default async function ProductDetailPage({
     : 0;
 
   const availableStock = product.stock_quantity - product.reserved_quantity;
+  const vendor = Array.isArray(product.vendor) ? product.vendor[0] : product.vendor;
+  const vendorName =
+    vendor?.store_name ||
+    vendor?.business_name ||
+    vendor?.full_name ||
+    'Roorq Seller';
+  const vendorInitial = vendorName.charAt(0).toUpperCase();
+  const askQuestionHref = vendor?.business_phone
+    ? `https://wa.me/${vendor.business_phone.replace(/\D/g, '')}?text=${encodeURIComponent(
+        `Hi ${vendorName}, I had a question about ${product.name} on Roorq.`
+      )}`
+    : vendor?.business_email || vendor?.email
+      ? `mailto:${vendor.business_email || vendor.email}?subject=${encodeURIComponent(
+          `Question about ${product.name}`
+        )}&body=${encodeURIComponent(
+          `Hi ${vendorName},%0D%0A%0D%0AI had a question about ${product.name} on Roorq.`
+        )}`
+      : `/contact?product=${product.id}`;
+  const sellerStatus = vendor?.vendor_status === 'approved' ? 'Verified campus seller' : 'Seller on Roorq';
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-white">
@@ -159,6 +192,54 @@ export default async function ProductDetailPage({
                    </p>
                 )}
               </div>
+
+              {vendor && (
+                <div className="border-y border-gray-100 py-6 mb-8">
+                  <div className="flex items-center gap-4 mb-5">
+                    {vendor.store_logo_url ? (
+                      <img
+                        src={vendor.store_logo_url}
+                        alt={vendorName}
+                        className="h-14 w-14 rounded-full object-cover border border-gray-200"
+                      />
+                    ) : (
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-lg font-black uppercase text-white">
+                        {vendorInitial}
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-black uppercase tracking-wide text-black">
+                        {vendorName}
+                      </p>
+                      <p className="mt-1 text-[11px] font-mono uppercase tracking-[0.2em] text-gray-500">
+                        {sellerStatus}
+                      </p>
+                      {vendor.store_description && (
+                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-gray-600">
+                          {vendor.store_description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <Link
+                      href={`/shop?vendor=${vendor.id}`}
+                      className="flex h-12 items-center justify-center border border-black bg-white px-5 text-sm font-black uppercase tracking-widest text-black transition hover:bg-black hover:text-white"
+                    >
+                      Visit Shop
+                    </Link>
+                    <a
+                      href={askQuestionHref}
+                      target={askQuestionHref.startsWith('http') ? '_blank' : undefined}
+                      rel={askQuestionHref.startsWith('http') ? 'noreferrer' : undefined}
+                      className="flex h-12 items-center justify-center border border-gray-300 bg-gray-50 px-5 text-sm font-black uppercase tracking-widest text-black transition hover:border-black hover:bg-white"
+                    >
+                      Ask A Question
+                    </a>
+                  </div>
+                </div>
+              )}
 
               {/* Trust Indicators */}
               <div className="grid grid-cols-2 gap-4">
