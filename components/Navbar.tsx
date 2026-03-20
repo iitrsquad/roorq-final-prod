@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useMemo, useState, useRef, useEffect } from 'react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { ShoppingCart, Menu, X, User as UserIcon, Search, ChevronDown, LogOut } from 'lucide-react';
@@ -344,8 +345,19 @@ export default function Navbar() {
 
             {/* Center: Logo */}
             <div className="flex-1 flex justify-center">
-              <Link href="/" className="text-3xl md:text-4xl font-extrabold tracking-tighter hover:text-red-600 transition-colors">
-                roorq.
+              <Link
+                href="/"
+                aria-label="Roorq home"
+                className="flex items-center justify-center transition-opacity hover:opacity-80"
+              >
+                <Image
+                  src="/roorq-logo-black.svg"
+                  alt="Roorq"
+                  width={140}
+                  height={42}
+                  priority
+                  className="h-8 w-auto md:h-10"
+                />
               </Link>
             </div>
 
