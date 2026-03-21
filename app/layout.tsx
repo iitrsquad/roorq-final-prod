@@ -9,7 +9,7 @@ import CookieConsent from "@/components/CookieConsent";
 import { assertValidEnv } from "@/lib/env.validation";
 import { getSiteUrl } from "@/lib/seo/site";
 import { organizationSchema, websiteSchema } from "@/lib/seo/schema";
-import { Analytics as VercelAnalytics  } from "@vercel/analytics/next"
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),

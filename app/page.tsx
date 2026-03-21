@@ -79,7 +79,7 @@ export default async function Home() {
         </div>
 
         {/* Badge - Bottom Left positioning */}
-        <div className="absolute bottom-10 left-6 md:left-12 z-20 flex flex-col items-start gap-2">
+        <div className="absolute bottom-6 md:bottom-8 left-6 md:left-12 z-20 flex flex-col items-start gap-2">
           <div className="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
             Campus-First Thrift
           </div>
@@ -523,5 +523,6 @@ export default async function Home() {
     </div>
   );
 }
+
 
 
