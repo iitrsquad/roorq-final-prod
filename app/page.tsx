@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DropCountdown from '@/components/DropCountdown';
@@ -29,67 +29,116 @@ export default async function Home() {
       <Navbar />
       
             {/* SECTION 1: Hero Banner */}
-      <section className="relative w-full h-[620px] md:h-[820px] bg-gray-100 overflow-hidden">
-        {/* Background Image - Full Bleed */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=2070&auto=format&fit=crop"
-            alt="Curated thrift finds"
-            className="w-full h-full object-cover object-center"
-          />
-        </div>
-        <div className="absolute inset-0 bg-black/35 z-[1]" />
+      <section className="relative overflow-hidden border-b border-[#e8e2d8] bg-[#faf8f4]">
+        <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,rgba(181,70,55,0.10),transparent_60%)]" />
+        <div className="absolute -left-10 top-28 h-44 w-44 rounded-full bg-[#e9dccf] blur-3xl opacity-70" />
+        <div className="absolute right-0 top-10 h-40 w-40 rounded-full bg-[#f0e6db] blur-3xl opacity-90" />
 
-        {/* Content Overlay */}
-        <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-center px-4">
-          <div className="inline-flex items-center gap-2 bg-white/90 text-black px-4 py-2 text-[10px] font-black uppercase tracking-widest border border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-            Curated Thrift Marketplace
-          </div>
+        <div className="relative max-w-[1800px] mx-auto px-5 sm:px-6 lg:px-8 py-10 md:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 md:gap-12 items-center">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center rounded-full border border-[#ddd2c3] bg-white/90 px-4 py-2 text-[10px] md:text-xs font-bold tracking-[0.18em] text-[#3c352d] shadow-[0_8px_24px_rgba(33,24,16,0.06)]">
+                India's First Story-Scored Vintage Marketplace
+              </div>
 
-          <h1 className="mt-6 text-[11vw] md:text-[6.5rem] font-black uppercase tracking-tight leading-[0.9] text-white drop-shadow-2xl">
-            Thrift Finds That
-            <span className="block text-red-500">Feel One-of-One</span>
-          </h1>
+              <h1 className="mt-6 text-[2.55rem] leading-[0.94] sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.04em] text-[#181512]">
+                Vintage finds with
+                <span className="block text-[#b54637]">real stories behind them.</span>
+              </h1>
 
-          <p className="mt-6 text-sm md:text-lg text-white/90 max-w-2xl font-medium">
-            Shop verified thrift sellers and Instagram boutiques. Limited stock, fresh drops daily, delivered to campus.
-          </p>
+              <p className="mt-5 max-w-xl text-[15px] md:text-base leading-7 text-[#5e554d]">
+                Every item on ROORQ comes with a Story Score - verified origin, era, and cultural value. So you always know what you're buying.
+              </p>
 
-          <div className="mt-10 flex flex-col md:flex-row gap-5 items-center justify-center w-full max-w-2xl">
-            <Link
-              href="/shop"
-              className="group bg-white text-black px-10 py-4 text-sm font-black uppercase tracking-widest border-2 border-black hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] flex items-center gap-3 min-w-[220px] justify-center"
-            >
-              Shop Thrift Finds <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-xl">
+                <Link
+                  href="/shop"
+                  className="inline-flex items-center justify-center gap-3 rounded-xl bg-[#1f1a17] px-6 py-4 text-sm font-black tracking-[0.14em] text-white uppercase transition hover:bg-[#b54637]"
+                >
+                  Shop Verified Finds
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/sell"
+                  className="inline-flex items-center justify-center gap-3 rounded-xl border border-[#1f1a17] bg-white px-6 py-4 text-sm font-black tracking-[0.14em] text-[#1f1a17] uppercase transition hover:bg-[#f4eee6]"
+                >
+                  Sell on ROORQ
+                  <UserPlus className="w-4 h-4" />
+                </Link>
+              </div>
 
-            <Link
-              href="/sell"
-              className="group bg-transparent text-white px-10 py-4 text-sm font-black uppercase tracking-widest border-2 border-white hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.35)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] flex items-center gap-3 min-w-[220px] justify-center"
-            >
-              Sell on Roorq <UserPlus className="w-4 h-4" />
-            </Link>
-          </div>
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
+                <div className="rounded-2xl border border-[#e8dfd3] bg-white px-4 py-4 shadow-[0_16px_40px_rgba(33,24,16,0.06)]">
+                  <ShieldCheck className="w-5 h-5 text-[#181512]" strokeWidth={1.8} />
+                  <p className="mt-3 text-sm font-black tracking-tight text-[#181512]">Story Score</p>
+                  <p className="mt-1 text-sm leading-6 text-[#666059]">Every item verified</p>
+                </div>
+                <div className="rounded-2xl border border-[#e8dfd3] bg-white px-4 py-4 shadow-[0_16px_40px_rgba(33,24,16,0.06)]">
+                  <ShoppingBag className="w-5 h-5 text-[#181512]" strokeWidth={1.8} />
+                  <p className="mt-3 text-sm font-black tracking-tight text-[#181512]">50+ Sellers</p>
+                  <p className="mt-1 text-sm leading-6 text-[#666059]">Verified vintage curators</p>
+                </div>
+                <div className="rounded-2xl border border-[#e8dfd3] bg-white px-4 py-4 shadow-[0_16px_40px_rgba(33,24,16,0.06)]">
+                  <Star className="w-5 h-5 text-[#181512]" strokeWidth={1.8} />
+                  <p className="mt-3 text-sm font-black tracking-tight text-[#181512]">Fresh Drops</p>
+                  <p className="mt-1 text-sm leading-6 text-[#666059]">New listings daily</p>
+                </div>
+              </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-[10px] md:text-xs uppercase tracking-widest font-mono text-white/80">
-            <span className="px-3 py-1 border border-white/40">Verified sellers</span>
-            <span className="px-3 py-1 border border-white/40">COD & UPI</span>
-            <span className="px-3 py-1 border border-white/40">24-48h campus delivery</span>
-          </div>
-        </div>
+              <p className="mt-5 text-xs md:text-sm text-[#766d63] tracking-[0.08em] uppercase">
+                Each listing is rated on <span className="text-[#181512] font-semibold">Origin</span> &middot; <span className="text-[#181512] font-semibold">Era</span> &middot; <span className="text-[#181512] font-semibold">Brand</span> &middot; <span className="text-[#181512] font-semibold">Cultural Value</span>
+              </p>
+            </div>
 
-        {/* Badge - Bottom Left positioning */}
-        <div className="absolute bottom-6 md:bottom-8 left-6 md:left-12 z-20 flex flex-col items-start gap-2">
-          <div className="bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            Campus-First Thrift
+            <div className="relative">
+              <div className="grid grid-cols-[0.8fr_1fr] gap-3 md:gap-4 items-end">
+                <div className="space-y-3 md:space-y-4">
+                  <div className="overflow-hidden rounded-[26px] border border-[#e5dbcf] bg-white p-2 shadow-[0_24px_60px_rgba(33,24,16,0.08)] rotate-[-4deg]">
+                    <img
+                      src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80"
+                      alt="Vintage denim jacket"
+                      className="h-[220px] w-full rounded-[20px] object-cover md:h-[260px]"
+                    />
+                  </div>
+                  <div className="rounded-[22px] border border-[#e5dbcf] bg-white px-5 py-4 shadow-[0_20px_50px_rgba(33,24,16,0.06)]">
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-[#8a7f73]">How Story Score works</p>
+                    <p className="mt-2 text-sm leading-6 text-[#4d463f]">We grade every piece on origin, era clues, brand signals, and cultural relevance before it goes live.</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 md:space-y-4">
+                  <div className="overflow-hidden rounded-[30px] border border-[#e5dbcf] bg-white p-2 shadow-[0_28px_70px_rgba(33,24,16,0.10)]">
+                    <img
+                      src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80"
+                      alt="Students shopping vintage fashion"
+                      className="h-[320px] w-full rounded-[24px] object-cover md:h-[460px]"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="overflow-hidden rounded-[24px] border border-[#e5dbcf] bg-white p-2 shadow-[0_18px_40px_rgba(33,24,16,0.08)] translate-y-2">
+                      <img
+                        src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80"
+                        alt="Vintage accessories"
+                        className="h-[150px] w-full rounded-[18px] object-cover"
+                      />
+                    </div>
+                    <div className="rounded-[24px] border border-[#e5dbcf] bg-[#fffdf9] px-4 py-5 shadow-[0_18px_40px_rgba(33,24,16,0.06)]">
+                      <p className="text-[11px] uppercase tracking-[0.22em] text-[#8a7f73]">Fresh today</p>
+                      <p className="mt-2 text-2xl font-black tracking-tight text-[#181512]">8 new</p>
+                      <p className="mt-1 text-sm leading-6 text-[#5e554d]">Verified listings added across denim, outerwear, and campus staples.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* COD Trust Strip */}
-      <div className="bg-black text-white py-3 text-center border-b border-gray-800">
-        <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest font-mono">
-          Verified thrift sellers - COD & UPI - Campus delivery in 24-48 hours
+      <div className="bg-[#1a1a1a] text-white py-3 text-center border-b border-black">
+        <p className="px-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.18em]">
+          Story Score Verified &middot; Authentic Vintage &middot; COD &amp; UPI &middot; Campus Delivery &middot; IIT Roorkee Startup &middot; Fresh Drops Daily
         </p>
       </div>
 
@@ -146,7 +195,7 @@ export default async function Home() {
               This Week's Drop
             </h2>
             <p className="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest font-mono">
-              Limited Quantities • Once Sold Out, Gone Forever
+              Limited Quantities â€¢ Once Sold Out, Gone Forever
             </p>
           </div>
           <Link href="/shop" className="hidden md:inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest hover:text-gray-600 transition">
@@ -384,7 +433,7 @@ export default async function Home() {
                 </span>
               </h2>
               <p className="text-gray-400 text-lg font-medium mb-10 max-w-md leading-relaxed">
-                Refer a friend — when they buy their first order, you get the same-category item free.
+                Refer a friend â€” when they buy their first order, you get the same-category item free.
               </p>
               <Link 
                 href="/referrals" 
@@ -396,9 +445,9 @@ export default async function Home() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { item: 'Sweater', icon: '🧥' },
-                { item: 'Jacket', icon: '�-' },
-                { item: 'Shoes', icon: '👟' },
+                { item: 'Sweater', icon: 'ðŸ§¥' },
+                { item: 'Jacket', icon: 'ï¿½-' },
+                { item: 'Shoes', icon: 'ðŸ‘Ÿ' },
               ].map((ex, idx) => (
                 <div key={idx} className="bg-zinc-900 border border-zinc-800 p-6 flex flex-col justify-between h-48 hover:border-white transition duration-300">
                   <div className="text-3xl">{ex.icon}</div>
@@ -406,7 +455,7 @@ export default async function Home() {
                     <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-2">Scenario {idx + 1}</p>
                     <p className="text-sm font-bold uppercase leading-tight">
                       Friend buys {ex.item} <br />
-                      <span className="text-green-400">→ You get {ex.item} Free</span>
+                      <span className="text-green-400">â†’ You get {ex.item} Free</span>
                     </p>
                   </div>
                 </div>
@@ -513,7 +562,7 @@ export default async function Home() {
             href="/shop" 
             className="block w-full bg-white text-red-600 text-center py-3 font-black uppercase tracking-widest text-sm rounded-none"
           >
-            Shop Drop — Live
+            Shop Drop â€” Live
           </Link>
         </div>
       )}
@@ -523,6 +572,7 @@ export default async function Home() {
     </div>
   );
 }
+
 
 
 
