@@ -28,6 +28,18 @@ type ProductFormInitialData = {
   images?: string[];
   drop_id?: string | null;
   is_active?: boolean;
+  // Story Score
+  story_score_origin?: number | null;
+  story_score_era?: number | null;
+  story_score_brand?: number | null;
+  story_score_cultural?: number | null;
+  story_score_condition?: number | null;
+  story_origin_text?: string | null;
+  story_era_text?: string | null;
+  story_brand_text?: string | null;
+  story_cultural_text?: string | null;
+  story_condition_text?: string | null;
+  story_rarity?: string | null;
 };
 
 interface ProductFormProps {
@@ -54,6 +66,18 @@ export default function ProductForm({ initialData, drops }: ProductFormProps) {
     images: initialData?.images || [],
     drop_id: initialData?.drop_id || '',
     is_active: initialData?.is_active ?? true,
+    // Story Score
+    story_score_origin:    initialData?.story_score_origin    ?? 5,
+    story_score_era:       initialData?.story_score_era       ?? 5,
+    story_score_brand:     initialData?.story_score_brand     ?? 5,
+    story_score_cultural:  initialData?.story_score_cultural  ?? 5,
+    story_score_condition: initialData?.story_score_condition ?? 5,
+    story_origin_text:    initialData?.story_origin_text    || '',
+    story_era_text:       initialData?.story_era_text       || '',
+    story_brand_text:     initialData?.story_brand_text     || '',
+    story_cultural_text:  initialData?.story_cultural_text  || '',
+    story_condition_text: initialData?.story_condition_text || '',
+    story_rarity:         initialData?.story_rarity         || '',
   });
 
   const [newImage, setNewImage] = useState('');
@@ -355,6 +379,78 @@ export default function ProductForm({ initialData, drops }: ProductFormProps) {
               </button>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* ── Story Score Section ── */}
+      <div className="border border-[#e8dfd3] bg-[#faf8f4] rounded-lg overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8dfd3] bg-[#f0ebe3]">
+          <div>
+            <h3 className="text-sm font-black uppercase tracking-widest text-[#1f1a17]">◆ Story Score</h3>
+            <p className="text-xs text-gray-500 mt-0.5">Rate each dimension 1–10. Required for all vintage listings.</p>
+          </div>
+          <div className="text-right">
+            <div className="text-2xl font-black text-[#b54637]">
+              {(
+                (Number(formData.story_score_origin) +
+                 Number(formData.story_score_era) +
+                 Number(formData.story_score_brand) +
+                 Number(formData.story_score_cultural) +
+                 Number(formData.story_score_condition)) / 5
+              ).toFixed(1)}
+            </div>
+            <div className="text-[10px] text-gray-400 uppercase tracking-widest">/ 10 Total</div>
+          </div>
+        </div>
+        <div className="p-6 space-y-6">
+          {([
+            { key: 'story_score_origin',    textKey: 'story_origin_text',    label: 'Origin',    hint: 'Where was this piece sourced? e.g. "Jaipur Bapu Bazaar"' },
+            { key: 'story_score_era',       textKey: 'story_era_text',       label: 'Era',       hint: 'What era? e.g. "Mid-90s grunge era"' },
+            { key: 'story_score_brand',     textKey: 'story_brand_text',     label: 'Brand',     hint: 'Brand authenticity. e.g. "Authentic Levi\'s 501, red tab intact"' },
+            { key: 'story_score_condition', textKey: 'story_condition_text', label: 'Condition', hint: 'Physical condition. e.g. "Minor collar fade, no tears"' },
+            { key: 'story_score_cultural',  textKey: 'story_cultural_text',  label: 'Cultural',  hint: 'Cultural value. e.g. "Classic campus collector piece"' },
+          ] as const).map(({ key, textKey, label, hint }) => (
+            <div key={key} className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-3 items-start">
+              <div>
+                <label className="block text-xs font-black uppercase tracking-widest text-[#1f1a17] mb-1">{label}</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="range"
+                    name={key}
+                    min={1}
+                    max={10}
+                    value={formData[key]}
+                    onChange={handleChange}
+                    className="flex-1 accent-[#b54637]"
+                  />
+                  <span className="w-6 text-center text-sm font-black text-[#b54637]">{formData[key]}</span>
+                </div>
+              </div>
+              <input
+                type="text"
+                name={textKey}
+                value={formData[textKey]}
+                onChange={handleChange}
+                placeholder={hint}
+                className="w-full border border-[#e8dfd3] bg-white p-2.5 text-sm rounded focus:outline-none focus:border-[#b54637] mt-5"
+              />
+            </div>
+          ))}
+          <div>
+            <label className="block text-xs font-black uppercase tracking-widest text-[#1f1a17] mb-2">Rarity Tier</label>
+            <select
+              name="story_rarity"
+              value={formData.story_rarity}
+              onChange={handleChange}
+              className="border border-[#e8dfd3] bg-white p-2.5 text-sm rounded focus:outline-none focus:border-[#b54637]"
+            >
+              <option value="">— Select rarity —</option>
+              <option value="find">Find — Good everyday piece</option>
+              <option value="rare">Rare — Hard to find</option>
+              <option value="grail">Grail — Very rare, collector worthy</option>
+              <option value="1of1">1 of 1 — Truly one of a kind</option>
+            </select>
+          </div>
         </div>
       </div>
 

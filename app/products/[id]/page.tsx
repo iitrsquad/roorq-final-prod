@@ -12,6 +12,7 @@ import { formatINR } from '@/lib/utils/currency';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Check, ShieldCheck, Truck, RefreshCcw, Ruler } from 'lucide-react';
+import StickyCartBar from '@/components/StickyCartBar';
 
 const getProduct = cache(async (id: string) => {
   const supabase = await createClient();
@@ -274,6 +275,77 @@ export default async function ProductDetailPage({
               </div>
             </div>
 
+            {/* Vintage Passport — Story Score Breakdown */}
+            {product.story_score_total != null && (
+              <div className="border border-[#e8dfd3] bg-[#faf8f4] mb-8">
+                {/* Header */}
+                <div className="flex items-center justify-between px-5 py-4 border-b border-[#e8dfd3]">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#b54637] text-base font-black">◆</span>
+                    <span className="text-sm font-black uppercase tracking-[0.18em] text-[#1f1a17]">Story Score</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl font-black text-[#1f1a17] tracking-tight">
+                      {Number(product.story_score_total).toFixed(1)}
+                      <span className="text-sm text-gray-400 font-normal">/10</span>
+                    </span>
+                    <span className="bg-[#1f1a17] text-white text-[9px] font-black tracking-[0.18em] uppercase px-2 py-1">
+                      VERIFIED
+                    </span>
+                  </div>
+                </div>
+
+                {/* Score Rows */}
+                <div className="divide-y divide-[#e8dfd3]">
+                  {[
+                    { label: 'Origin',    score: product.story_score_origin,    text: product.story_origin_text },
+                    { label: 'Era',       score: product.story_score_era,       text: product.story_era_text },
+                    { label: 'Brand',     score: product.story_score_brand,     text: product.story_brand_text },
+                    { label: 'Condition', score: product.story_score_condition, text: product.story_condition_text },
+                    { label: 'Cultural',  score: product.story_score_cultural,  text: product.story_cultural_text },
+                  ].map(({ label, score, text }) => score != null && (
+                    <div key={label} className="px-5 py-3 flex items-center gap-4">
+                      <span className="w-20 text-[10px] font-black uppercase tracking-[0.15em] text-gray-500 shrink-0">
+                        {label}
+                      </span>
+                      {/* Score bar */}
+                      <div className="flex-1 h-1.5 bg-[#e8dfd3] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-[#b54637] rounded-full transition-all"
+                          style={{ width: `${(score / 10) * 100}%` }}
+                        />
+                      </div>
+                      <span className="w-7 text-xs font-black text-right text-[#1f1a17] shrink-0">{score}/10</span>
+                      {text && (
+                        <span className="text-[11px] text-gray-500 font-mono leading-tight hidden sm:block max-w-[180px] truncate" title={text}>
+                          {text}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Footer */}
+                <div className="px-5 py-3 border-t border-[#e8dfd3] flex items-center justify-between">
+                  <span className="text-[10px] text-gray-400 font-mono uppercase tracking-widest">
+                    Verified by {product.story_verified_by || 'ROORQ Team'}
+                    {product.story_verified_at
+                      ? ` · ${new Date(product.story_verified_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}`
+                      : ''}
+                  </span>
+                  {product.story_rarity && (
+                    <span className={`text-[9px] font-black tracking-[0.18em] uppercase px-2 py-1 ${
+                      product.story_rarity === 'grail' || product.story_rarity === '1of1'
+                        ? 'bg-[#b54637] text-white'
+                        : 'bg-[#1f1a17] text-white'
+                    }`}>
+                      {product.story_rarity === '1of1' ? '1 OF 1' : product.story_rarity.toUpperCase()}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Description */}
             <div className="prose prose-sm max-w-none">
               <h3 className="text-sm font-black uppercase tracking-widest mb-4">Description</h3>
@@ -284,12 +356,19 @@ export default async function ProductDetailPage({
                 <div><span className="font-bold text-black">Material:</span> {product.material || 'N/A'}</div>
                 <div><span className="font-bold text-black">Color:</span> {product.color || 'N/A'}</div>
                 <div><span className="font-bold text-black">Category:</span> {product.category}</div>
-                <div><span className="font-bold text-black">Condition:</span> Excellent Vintage</div>
+                <div><span className="font-bold text-black">Condition:</span> {product.story_condition_text || 'Vintage'}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <StickyCartBar
+        productId={product.id}
+        productName={product.name}
+        price={product.price}
+        size={product.size}
+        disabled={availableStock === 0}
+      />
       <Footer />
     </div>
   );

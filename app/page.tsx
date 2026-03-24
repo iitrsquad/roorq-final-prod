@@ -2,6 +2,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DropCountdown from '@/components/DropCountdown';
+import Drop001Banner from '@/components/Drop001Banner';
 import { createClient } from '@/lib/supabase/server';
 import ProductCard from '@/components/ProductCard';
 import CommunityStrip from '@/components/CommunityStrip';
@@ -27,8 +28,9 @@ export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-white text-black pb-20 md:pb-0 selection:bg-black selection:text-white">
       <Navbar />
-      
-            {/* SECTION 1: Hero Banner */}
+      <Drop001Banner />
+
+      {/* SECTION 1: Hero Banner */}
       <section className="relative overflow-hidden border-b border-[#e8e2d8] bg-[#faf8f4]">
         <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,rgba(181,70,55,0.10),transparent_60%)]" />
         <div className="absolute -left-10 top-28 h-44 w-44 rounded-full bg-[#e9dccf] blur-3xl opacity-70" />
@@ -469,18 +471,18 @@ export default async function Home() {
       <section className="py-20 bg-white border-y border-gray-200">
         <div className="max-w-[1800px] mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Card 1 - Brand New */}
+            {/* Card 1 - Story Scored */}
             <div className="relative h-[500px] group overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1548883354-94bcfe321cbb?q=80&w=2070&auto=format&fit=crop" 
-                alt="Brand New Only"
+              <img
+                src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop"
+                alt="Every piece Story Scored"
                 className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500"></div>
               <div className="absolute bottom-0 left-0 w-full p-10 text-white border-t border-white/20 backdrop-blur-sm bg-black/30">
-                <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 leading-none">Brand New<br/>Only</h3>
+                <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 leading-none">Every Piece<br/>Story Scored</h3>
                 <p className="text-xs font-mono uppercase tracking-widest text-gray-300 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover:translate-y-0">
-                  Direct factory surplus. No used clothes. No thrift roulette.
+                  Origin · Era · Brand · Cultural Value — verified before it ever reaches you.
                 </p>
                 <div className="w-12 h-1 bg-white"></div>
               </div>
